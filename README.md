@@ -1,4 +1,5 @@
-### F1Visualizer
+# F1Visualizer
+
 # English Version
 This project is meant to enable me to learn how to use API calls and to enhance my Python level.
 Im french and this is the english part of the readme, if you want it in french, go lower in the file.
