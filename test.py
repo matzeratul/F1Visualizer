@@ -1,13 +1,20 @@
-import requests
-import json
 import streamlit as st
-import pandas as pd
+import Data
+import Chart
 
-test=json.loads(requests.get("https://api.openf1.org/v1/session_result?session_key=7782").text)
-
-st.write(test[0])
-st.dataframe(pd.DataFrame(json.loads(requests.get("https://api.openf1.org/v1/session_result?session_key=7782").text)))
+#python -m streamlit run test.py
 
 
-for i in range(19):
-    st.write(json.loads(requests.get(f"https://api.openf1.org/v1/drivers?driver_number={test[i]['driver_number']}&session_key=9158").text)[0]['name_acronym'])
+def initRace(sessionProperties):
+    results = Data.resultsData(sessionProperties)
+    driversData = Data.drivers(sessionProperties,results)
+    Chart.resultsTab(results,driversData,Data.lapsData(sessionProperties))
+    positionsData = Data.positions(sessionProperties)
+    Chart.positionChart(driversData,positionsData)
+    tyreData = Data.tyres(sessionProperties,driversData)
+    Chart.tyreChart(tyreData,driversData)
+
+st.set_page_config(layout="wide")
+sessionProperties=Data.session()
+st.write(sessionProperties)
+initRace(sessionProperties)
