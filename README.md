@@ -1,5 +1,5 @@
-# F1Visualizer
-### English Version
+### F1Visualizer
+# English Version
 This project is meant to enable me to learn how to use API calls and to enhance my Python level.
 Im french and this is the english part of the readme, if you want it in french, go lower in the file.
 Im willing to write All the code and the interface in english first, and maybe translate the interface in french later.
@@ -11,12 +11,12 @@ Im willing to write All the code and the interface in english first, and maybe t
 * plotly
 
 ## To use the app: you need to have python 3 installed and :
-# to install the dependancies:
+### to install the dependancies:
 
 ```bash
 python -m pip install -r requirement.txt
 ```
-# in order to launch the app: (from a shell in the app root) 
+### in order to launch the app: (from a shell in the app root) 
 
 ```bash
 python -m streamlit run test.py
@@ -52,7 +52,7 @@ python -m streamlit run test.py
 
 ## Thanks for passing by, if you have any advice or demand, please leave it.
 
-### Version Française:
+# Version Française:
 Ce projet a pour but de me faire apprendre comment utiliser les appels API et d'ameilliorer mon niveau en Python.
 J'espère traduire l'interface de l'application en français, mais sachez qu'elle a été pensée pour l'anglais.
 Evidemment le code est écrit en anglais (variables/fonctions) car il est destiné pour un publique international.
@@ -64,11 +64,11 @@ Evidemment le code est écrit en anglais (variables/fonctions) car il est destin
 * plotly
 
 ## Pour utiliser l'application: vous avez besoin d'avoir python3 d'installé et:
-# pour installer les modules: 
+### pour installer les modules: 
 ```bash
 python -m pip install -r requirement.txt
 ```
-# pour lancer l'application: (depuis un shell à la racine de l'app) 
+### pour lancer l'application: (depuis un shell à la racine de l'app) 
 ```bash
 python -m streamlit run test.py
 ```
