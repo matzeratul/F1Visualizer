@@ -1,20 +1,21 @@
 import streamlit as st
-import Data
-import Chart
+import requests
+import json
 
+
+drivers = {}
+maxi = 0
+intervals = json.loads(requests.get("https://api.openf1.org/v1/intervals?session_key=latest").text)
+for interval in intervals:
+  if f"{interval['driver_number']}" not in drivers.keys():
+    drivers[f"{interval['driver_number']}"] = []
+  if interval['interval'] == None:
+    drivers[f"{interval['driver_number']}"].append(0.0)
+  elif type(interval['interval']) == str:
+    drivers[f"{interval['driver_number']}"].append(90.0)
+  else:
+      drivers[f"{interval['driver_number']}"].append(interval['interval'])
+
+st.dataframe(drivers)
 #python -m streamlit run test.py
 
-
-def initRace(sessionProperties):
-    results = Data.resultsData(sessionProperties)
-    driversData = Data.drivers(sessionProperties,results)
-    Chart.resultsTab(results,driversData,Data.lapsData(sessionProperties))
-    positionsData = Data.positions(sessionProperties)
-    Chart.positionChart(driversData,positionsData)
-    tyreData = Data.tyres(sessionProperties,driversData)
-    Chart.tyreChart(tyreData,driversData)
-
-st.set_page_config(layout="wide")
-sessionProperties=Data.session()
-st.write(sessionProperties)
-initRace(sessionProperties)

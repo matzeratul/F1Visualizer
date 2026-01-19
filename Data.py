@@ -30,6 +30,8 @@ def compare_iso8601(date1: str, date2: str) -> bool:
     return _parse(date1) < _parse(date2)
 
 def formatTime(time:float) -> str:
+    if time == None:
+        return ""
     hours = str(int(time/3600.0))
     time = time%3600.0
     minutes = str(int(time/60.0))
@@ -54,7 +56,8 @@ def drivers(sessionProperties:dict,results:dict) -> dict:
         li[f"{driver['driver_number']}"]['full_name'] = driver['full_name']
         li[f"{driver['driver_number']}"]['team_name'] = driver['team_name']
         li[f"{driver['driver_number']}"]['team_colour'] = f"#{driver['team_colour']}"
-        li[f"{driver['driver_number']}"]['country_code'] = driver['country_code']
+        if driver['country_code'] != None:
+            li[f"{driver['driver_number']}"]['country_code'] = driver['country_code']
     return li
 
 def teamColors(driverData:dict) -> dict:
@@ -142,14 +145,16 @@ def tyreColor(compound:str) -> str:
         case "WET":
             return"#2962C1"
 
-def PositionColor(position:int) -> str:
+def PositionColor(position:int,Sprint:bool) -> str:
     if int(position) == 1:
         return "#848128"
     elif int(position) == 2:
         return "#ABABAB82"
     elif int(position) == 3:
         return "#854a0e"
-    elif int(position)<=10:
+    elif Sprint and int(position)<=8:
+        return "#5bbc65"
+    elif not Sprint and int(position)<=10:
         return "#5bbc65"
     else:
         return "#ffffff"

@@ -11,7 +11,7 @@ def resultsTab(results:dict,driverData:dict,laps:dict):
             flags.subheader("flags")
         else:
             country = False
-            position,numbers,driver,team,durationTime = st.columns([0.19,0.19,0.1,0.16,0.16,0.2])
+            position,numbers,driver,team,durationTime = st.columns([0.1,0.1,0.3,0.25,0.25])
         ispoints = False
     else:
         if "country_code" in driverData[list(driverData.keys())[0]].keys():
@@ -39,7 +39,7 @@ def resultsTab(results:dict,driverData:dict,laps:dict):
             position.markdown("DSQ")
         else:
             if result['position'] <=10:
-                position.markdown(f'<div style="color:{Data.PositionColor(result["position"])};font-size:100%;margin:0;padding:0;margin-bottom:1rem;line-height:1.6">{result["position"]}</div>', unsafe_allow_html=True)
+                position.markdown(f'<div style="color:{Data.PositionColor(result["position"],"points" in result.keys() and results[0]["points"]==8)};font-size:100%;margin:0;padding:0;margin-bottom:1rem;line-height:1.6">{result["position"]}</div>', unsafe_allow_html=True)
             else:
                 position.markdown(result['position'])
         numbers.markdown(driverNumber)
@@ -72,10 +72,16 @@ def resultsTab(results:dict,driverData:dict,laps:dict):
             points.markdown(int(result['points']))
 
 def resultsQualifying(results:dict,driverData:dict):
-    position,number,flags,driver,team,q1,q2,q3 = st.columns([0.1,0.1,0.10,0.15,0.1,0.15,0.15,0.15])
+    if "country_code" in driverData[list(driverData.keys())[0]].keys():
+        flags = True
+        position,number,flags,driver,team,q1,q2,q3 = st.columns([0.1,0.1,0.10,0.15,0.1,0.15,0.15,0.15])
+    else:
+        flags = False
+        position,number,driver,team,q1,q2,q3 = st.columns([0.1,0.1,0.15,0.14,0.17,0.17,0.17])
     position.subheader("Position")
     number.subheader("Number")
-    flags.subheader("Flags")
+    if flags:
+        flags.subheader("Flags")
     driver.subheader("Driver")
     team.subheader("Teams")
     q1.subheader("Q1")
@@ -83,9 +89,10 @@ def resultsQualifying(results:dict,driverData:dict):
     q3.subheader("Q3")
     for result in results:
         driverNumber = str(result['driver_number'])
-        position.markdown(driverNumber)
-        number.markdown(result['position'])
-        flags.html(f'''<div style="display:flex;align-items:center;height:100%"><img src="./app/static/{driverData[driverNumber]["country_code"]}.png" alt="{driverData[driverNumber]["country_code"]}" style="width:50px;height:1.6rem;vertical-align:middle;margin:0;padding:0"></div>''')
+        position.markdown(result['position'])
+        number.markdown(driverNumber)
+        if flags:
+            flags.html(f'''<div style="display:flex;align-items:center;height:100%"><img src="./app/static/{driverData[driverNumber]["country_code"]}.png" alt="{driverData[driverNumber]["country_code"]}" style="width:50px;height:1.6rem;vertical-align:middle;margin:0;padding:0"></div>''')
         driver.markdown(driverData[driverNumber]['full_name'])
         team.markdown(f'<div style="color:{driverData[driverNumber]["team_colour"]};font-size:100%;margin:0;padding:0;margin-bottom:1rem;line-height:1.6">{driverData[driverNumber]["team_name"]}</div>', unsafe_allow_html=True)
         q1.markdown(Data.formatTime(result['duration'][0]))
