@@ -1,5 +1,6 @@
 import requests
 import json
+import streamlit as st
 from datetime import datetime
 
 def meeting(year):
@@ -70,10 +71,10 @@ def lapsData(sessionProperties:dict) -> dict:
     return json.loads(requests.get(f"https://api.openf1.org/v1/laps?session_key={sessionProperties['sessions'][sessionProperties['type']]}").text)
 
 def GPgridData(sessionProperties:dict) -> dict:
-    return json.loads(requests.get(f"https://api.openf1.org/v1/starting_grid?session_key={sessionProperties['sessions']['Qualifying']}").text)
+    return json.loads(requests.get(f"https://api.openf1.org/v1/session_result?session_key={sessionProperties['sessions']['Qualifying']}").text)
 
 def SprintGridData(sessionProperties:dict) -> dict:
-    return json.loads(requests.get(f"https://api.openf1.org/v1/starting_grid?session_key={sessionProperties['sessions']['Sprint Qualifying']}").text)
+    return json.loads(requests.get(f"https://api.openf1.org/v1/session_result?session_key={sessionProperties['sessions']['Sprint Qualifying']}").text)
 
 def bestLap(laps:dict) -> tuple[dict,int]:
     bestLaps = {}

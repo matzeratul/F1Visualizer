@@ -17,6 +17,7 @@ def initQualifying(sessionProperties):
     Chart.resultsQualifying(results,driversData)
 
 def initRace(sessionProperties):
+    st.write(sessionProperties)
     results = Data.resultsData(sessionProperties)
     driversData = Data.drivers(sessionProperties,results)
     Chart.resultsTab(results,driversData,Data.lapsData(sessionProperties))
@@ -39,7 +40,7 @@ def initsession():
     st.divider()
     sessionProperties = {}
     year, meeting = st.columns([0.3,0.7])
-    year = year.selectbox("year:",(2023,2024,2025),index=None,placeholder="year",label_visibility="collapsed")
+    year = year.selectbox("year:",(2023,2024,2025,2026),index=None,placeholder="year",label_visibility="collapsed")
     meetings = Data.meeting(year)
     sessionProperties['meeting'] = meeting.selectbox("country:",meetings,index=None,placeholder="meeting",label_visibility="collapsed")
     sessionProperties['sessions'] = Data.sessions(sessionProperties,year)
